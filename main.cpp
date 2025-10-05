@@ -16,12 +16,12 @@ int main() {
     sf::Text GameOver;
     sf::Text leavecounter;
 
-    if (!playertxto.loadFromFile("imgs/player.png")) return -1;
-    if (!groundtxto.loadFromFile("imgs/grassblock.png")) return -1;
-    if (!outofbounce.openFromFile("sounds/outofbounce.mp3")) return -1;
-    if (!font.loadFromFile("fonts/Roboto/font.ttf")) return -1;
-    if (!smallenemietxto.loadFromFile("imgs/smallenemie.png")) return -1;
-    if (!bigenemietxto.loadFromFile("imgs/bigenemie.png")) return -1;
+    if (!playertxto.loadFromFile("Assets/imgs/player.png")) return -1;
+    if (!groundtxto.loadFromFile("Assets/imgs/grassblock.png")) return -1;
+    if (!outofbounce.openFromFile("Assets/sounds/outofbounce.mp3")) return -1;
+    if (!font.loadFromFile("Assets/fonts/Roboto/font.ttf")) return -1;
+    if (!smallenemietxto.loadFromFile("Assets/imgs/smallenemie.png")) return -1;
+    if (!bigenemietxto.loadFromFile("Assets/imgs/bigenemie.png")) return -1;
 
     int Diescount = 0;
     int leavecount = 4;
