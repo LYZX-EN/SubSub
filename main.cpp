@@ -102,6 +102,10 @@ int main() {
                 window.close();
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            window.close();
+        }
+
         if (playertxt.getGlobalBounds().intersects(waytoroom1.getGlobalBounds()) && !inroom1) {
             yplayer = ywaytoroom1 - 75.0f;
         }
