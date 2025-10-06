@@ -211,26 +211,6 @@ int main() {
                 xbigenemie = 1000.0f;
                 bigenemietxt.setPosition(xbigenemie, ybigenemie);
             }
-
-            //rightside
-            if (xplayer > rightsite) {
-                /*
-                xplayer = xplayer - 100;
-                Diescount++;
-                Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
-                outofbounce.play();
-                */
-            }
-
-            //leftside
-            if (xplayer < leftsite) {
-                /*
-                xplayer = xplayer + 100;
-                Diescount++;
-                Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
-                outofbounce.play();
-                */
-            }
         }
 
         if (Diescount >= 10) {
