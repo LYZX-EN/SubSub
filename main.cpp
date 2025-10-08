@@ -1,8 +1,39 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+
+class PLAYER {
+public:
+    float velocityYplayer;
+    float xplayer;
+    float yplayer;
+    float jumpstrengh;
+    float playerspeed;
+};
+
+class ENEMIE {
+public:
+    float xenemie;
+    float yenemie;
+};
+
+class PLATTFORMS {
+public:
+    float xplattform;
+    float yplattform;
+};
+
 //YXC
 int main() {
+    PLAYER player1;
+
+    ENEMIE smallenemie;
+    ENEMIE bigenemie;
+
+    PLATTFORMS waytoroom1;
+    PLATTFORMS plattform;
+    PLATTFORMS ground;
+
     sf::RenderWindow window(sf::VideoMode(1000, 800), "SubSub");
 
     sf::Texture bigenemietxto;
@@ -23,35 +54,39 @@ int main() {
     if (!smallenemietxto.loadFromFile("Assets/imgs/smallenemie.png")) return -1;
     if (!bigenemietxto.loadFromFile("Assets/imgs/bigenemie.png")) return -1;
 
-    int Diescount = 0;
-    int leavecount = 4;
+    ground.xplattform = -2.0f;
+    ground.yplattform = 570.0f;
 
-    float xground = -2.0f;
-    float yground = 570.0f;
-    float xplattform = xground + 500;
-    float yplattform = yground - 200;
-    float xwaytoroom1 = xground + 868.0f;
-    float ywaytoroom1 = yground - 100.0f;
+    plattform.xplattform = ground.xplattform + 500;
+    plattform.yplattform = ground.yplattform - 200;
 
-    float xsmallenemie = xground + 1000.0f;
-    float ysmallenemie = yground - 73.0f;
-    float xbigenemie = xground + 1500.0f;
-    float ybigenemie = yground - 135.0f;
+    waytoroom1.xplattform = ground.xplattform + 868.0f;
+    waytoroom1.yplattform = ground.yplattform - 100.0f;
+
+    player1.velocityYplayer = 0.08f;
+    player1.xplayer = ground.xplattform + 410.0f;
+    player1.yplayer = ground.yplattform - 75.0f;
+    player1.jumpstrengh = 250.0f;
+    player1.playerspeed = 0.05f;
+
+    smallenemie.xenemie = ground.xplattform + 1000.0f;
+    smallenemie.yenemie = ground.yplattform - 73.0f;
+
+    bigenemie.xenemie = ground.xplattform + 1500.0f;
+    bigenemie.yenemie = ground.yplattform - 135.0f;
+
     bool showenemie = false;
-
-    float playerspeed = 0.05f;
     bool showplayer = true;
     bool isjumping = false;
-    bool onground;
     bool inroom1 = false;
-    float jumpstrengh = 250.0f;
+    bool onground;
+
+    int Diescount = 0;
+    int leavecount = 4;
     float rightsite = 925.0f;
     float leftsite = 4.0f;
-    float yplayeronwaytoroom1 = ywaytoroom1 - 75.0f;
-    float yplayeronplattform = yplattform - 75.0f;
-    float velocityYplayer = 0.08f;
-    float xplayer = xground + 410.0f;
-    float yplayer = yground - 75.0f;
+    float yplayeronwaytoroom1 = waytoroom1.yplattform - 75.0f;
+    float yplayeronplattform = plattform.yplattform - 75.0f;
 
     sf::Sprite playertxt;
     playertxt.setTexture(playertxto);
@@ -68,8 +103,8 @@ int main() {
     sf::Sprite bigenemietxt;
     bigenemietxt.setTexture(bigenemietxto);
 
-    sf::Sprite waytoroom1;
-    waytoroom1.setTexture(groundtxto);
+    sf::Sprite waytoroom1f;
+    waytoroom1f.setTexture(groundtxto);
 
     Dies.setFont(font);
     Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
@@ -77,23 +112,23 @@ int main() {
     Dies.setFillColor(sf::Color::White);
     Dies.setPosition(30, 50);
 
-    plattformtxt.setPosition(xplattform, yplattform);
+    plattformtxt.setPosition(plattform.xplattform, plattform.yplattform);
     plattformtxt.setScale(sf::Vector2f(0.5f, 0.1f));
 
-    playertxt.setPosition(xplayer, yplayer);
+    playertxt.setPosition(player1.xplayer, player1.yplayer);
     playertxt.setScale(0.1f, 0.1f);
 
-    groundtxt.setPosition(xground, yground);
+    groundtxt.setPosition(ground.xplattform, ground.yplattform);
     groundtxt.setScale(1.5f, 0.5f);
 
-    smallenemietxt.setPosition(xsmallenemie, ysmallenemie);
+    smallenemietxt.setPosition(smallenemie.xenemie, smallenemie.yenemie);
     smallenemietxt.setScale(0.2f, 0.18f);
 
-    bigenemietxt.setPosition(xbigenemie, ybigenemie);
+    bigenemietxt.setPosition(bigenemie.xenemie, bigenemie.yenemie);
     bigenemietxt.setScale(0.8f, 0.72f);
 
-    waytoroom1.setPosition(xwaytoroom1, ywaytoroom1);
-    waytoroom1.setScale(0.2f, 0.2f);
+    waytoroom1f.setPosition(waytoroom1.xplattform, waytoroom1.yplattform);
+    waytoroom1f.setScale(0.2f, 0.2f);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -106,51 +141,51 @@ int main() {
             window.close();
         }
 
-        if (playertxt.getGlobalBounds().intersects(waytoroom1.getGlobalBounds()) && !inroom1) {
-            yplayer = ywaytoroom1 - 75.0f;
+        if (playertxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds()) && !inroom1) {
+            player1.yplayer = waytoroom1.yplattform - 75.0f;
         }
 
         if (playertxt.getGlobalBounds().intersects(plattformtxt.getGlobalBounds()) && inroom1) {
-            yplayer = yplattform - 75.0f;
+            player1.yplayer = plattform.yplattform - 75.0f;
         }
 
-        if (xplayer > rightsite && inroom1) {
-            xplayer -= 100.0f;
+        if (player1.xplayer > rightsite && inroom1) {
+            player1.xplayer -= 100.0f;
             Diescount += 1;
             Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
             outofbounce.play();
         }
 
-        if (xplayer > rightsite) {
-            xplayer = leftsite;
+        if (player1.xplayer > rightsite) {
+            player1.xplayer = leftsite;
             inroom1 = true;
             if (clock.getElapsedTime().asSeconds() >= 1.0f) {
                 showenemie = true;
                 clock.restart();
             }
-        } else if (xplayer < leftsite && inroom1) {
-            xplayer = rightsite;
+        } else if (player1.xplayer < leftsite && inroom1) {
+            player1.xplayer = rightsite;
             inroom1 = false;
             showenemie = false;
-        } else if (xplayer < leftsite && !inroom1) {
-            xplayer += 100.0f;
+        } else if (player1.xplayer < leftsite && !inroom1) {
+            player1.xplayer += 100.0f;
             Diescount += 1;
             Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
             outofbounce.play();
         }
 
-        if (xplayer > xsmallenemie && xplayer < xbigenemie) {
-            if (jumpstrengh > 150.0f) {
-                jumpstrengh = 150.0f;
+        if (player1.xplayer > smallenemie.xenemie && player1.xplayer < bigenemie.xenemie) {
+            if (player1.jumpstrengh > 150.0f) {
+                player1.jumpstrengh = 150.0f;
             }
         }
 
         if (showenemie) {
-            xsmallenemie -= 0.02f;
-            smallenemietxt.setPosition(xsmallenemie, ysmallenemie);
+            smallenemie.xenemie -= 0.02f;
+            smallenemietxt.setPosition(smallenemie.xenemie, smallenemie.yenemie);
 
-            xbigenemie -= 0.02f;
-            bigenemietxt.setPosition(xbigenemie, ybigenemie);
+            bigenemie.xenemie -= 0.02f;
+            bigenemietxt.setPosition(bigenemie.xenemie, bigenemie.yenemie);
 
             if (playertxt.getGlobalBounds().intersects(smallenemietxt.getGlobalBounds())) {
                 outofbounce.play();
@@ -163,21 +198,21 @@ int main() {
             }
         }
 
-        if (yplayer == yground - 75.0f) {
+        if (player1.yplayer == ground.yplattform - 75.0f) {
             onground = true;
         }
 
         if (showplayer) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                xplayer -= playerspeed;
+                player1.xplayer -= player1.playerspeed;
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                xplayer += playerspeed;
+                player1.xplayer += player1.playerspeed;
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                if (!isjumping && onground || !isjumping && yplayer == yplayeronwaytoroom1 || !isjumping && yplayer == yplayeronplattform) {
+                if (!isjumping && onground || !isjumping && player1.yplayer == yplayeronwaytoroom1 || !isjumping && player1.yplayer == yplayeronplattform) {
                     isjumping = true;
                     onground = false;
                 }
@@ -185,31 +220,31 @@ int main() {
         }
 
         if (isjumping) {
-            yplayer -= velocityYplayer;
+            player1.yplayer -= player1.velocityYplayer;
 
-            if (yplayer <= jumpstrengh) {
+            if (player1.yplayer <= player1.jumpstrengh) {
                 isjumping = false;
             }
         } else if (!onground) {
-            yplayer += velocityYplayer;
+            player1.yplayer += player1.velocityYplayer;
 
-            if (yplayer >= yground - 75.0f) {
-                yplayer = yground - 75.0f;
+            if (player1.yplayer >= ground.yplattform - 75.0f) {
+                player1.yplayer = ground.yplattform - 75.0f;
                 onground = true;
             }
         }
 
-        playertxt.setPosition(xplayer, yplayer);
+        playertxt.setPosition(player1.xplayer, player1.yplayer);
 
-        if (xplayer > 925.0f || xplayer < 4.0f || xsmallenemie + smallenemietxt.getScale().x < 0 || xbigenemie + bigenemietxt.getScale().x < 0) {
-            if (xsmallenemie + smallenemietxt.getScale().x < 0) {
-                xsmallenemie = 1000.0f;
-                smallenemietxt.setPosition(xsmallenemie, ysmallenemie);
+        if (player1.xplayer > 925.0f || player1.xplayer < 4.0f || smallenemie.xenemie + smallenemietxt.getScale().x < 0 || bigenemie.xenemie + bigenemietxt.getScale().x < 0) {
+            if (smallenemie.xenemie + smallenemietxt.getScale().x < 0) {
+                smallenemie.xenemie = 1000.0f;
+                smallenemietxt.setPosition(smallenemie.xenemie, smallenemie.yenemie);
             }
 
-            if (xbigenemie + bigenemietxt.getScale().x < 0) {
-                xbigenemie = 1000.0f;
-                bigenemietxt.setPosition(xbigenemie, ybigenemie);
+            if (bigenemie.xenemie + bigenemietxt.getScale().x < 0) {
+                bigenemie.xenemie = 1000.0f;
+                bigenemietxt.setPosition(bigenemie.xenemie, bigenemie.yenemie);
             }
         }
 
@@ -249,7 +284,7 @@ int main() {
         window.draw(leavecounter);
 
         if (!inroom1) {
-            window.draw(waytoroom1);
+            window.draw(waytoroom1f);
         }
 
         if (inroom1) {
