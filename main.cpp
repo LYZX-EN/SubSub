@@ -141,7 +141,7 @@ int main() {
             window.close();
         }
 
-        if (playertxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds()) && !inroom1) {
+        if (playertxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
             player1.yplayer = waytoroom1.yplattform - 75.0f;
         }
 
@@ -284,6 +284,10 @@ int main() {
         window.draw(leavecounter);
 
         if (!inroom1) {
+            waytoroom1f.setPosition(waytoroom1.xplattform, waytoroom1.yplattform);
+            window.draw(waytoroom1f);
+        } else if (inroom1) {
+            waytoroom1f.setPosition(waytoroom1.xplattform - 870, waytoroom1.yplattform);
             window.draw(waytoroom1f);
         }
 
