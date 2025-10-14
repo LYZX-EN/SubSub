@@ -144,7 +144,7 @@ int main() {
         if (playertxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
             player1.yplayer = waytoroom1.yplattform - 75.0f;
         }
-
+        
         if (playertxt.getGlobalBounds().intersects(plattformtxt.getGlobalBounds()) && inroom1) {
             player1.yplayer = plattform.yplattform - 75.0f;
         }
@@ -236,13 +236,13 @@ int main() {
 
         playertxt.setPosition(player1.xplayer, player1.yplayer);
 
-        if (player1.xplayer > 925.0f || player1.xplayer < 4.0f || smallenemie.xenemie + smallenemietxt.getScale().x < 0 || bigenemie.xenemie + bigenemietxt.getScale().x < 0) {
-            if (smallenemie.xenemie + smallenemietxt.getScale().x < 0) {
+        if (player1.xplayer > 925.0f || player1.xplayer < 4.0f || smallenemietxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds()) || bigenemietxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
+            if (smallenemietxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
                 smallenemie.xenemie = 1000.0f;
                 smallenemietxt.setPosition(smallenemie.xenemie, smallenemie.yenemie);
             }
 
-            if (bigenemie.xenemie + bigenemietxt.getScale().x < 0) {
+            if (bigenemietxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
                 bigenemie.xenemie = 1000.0f;
                 bigenemietxt.setPosition(bigenemie.xenemie, bigenemie.yenemie);
             }
