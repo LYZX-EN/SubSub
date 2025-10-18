@@ -253,7 +253,7 @@ int main() {
             showenemie = false;
 
             GameOver.setFont(font);
-            GameOver.setString("Gameover");
+            GameOver.setString("GameOver");
             GameOver.setCharacterSize(170);
             GameOver.setFillColor(sf::Color::Red);
             GameOver.setPosition(120, 200);
@@ -283,16 +283,19 @@ int main() {
         window.draw(GameOver);
         window.draw(leavecounter);
 
-        if (!inroom1) {
-            waytoroom1f.setPosition(waytoroom1.xplattform, waytoroom1.yplattform);
-            window.draw(waytoroom1f);
-        } else if (inroom1) {
-            waytoroom1f.setPosition(waytoroom1.xplattform - 870, waytoroom1.yplattform);
-            window.draw(waytoroom1f);
+        if (showplayer) {
+            if (!inroom1) {
+                waytoroom1f.setPosition(waytoroom1.xplattform, waytoroom1.yplattform);
+                window.draw(waytoroom1f);
+            } else if (inroom1) {
+                waytoroom1f.setPosition(waytoroom1.xplattform - 870, waytoroom1.yplattform);
+                window.draw(waytoroom1f);
+            }
         }
-
-        if (inroom1) {
-            window.draw(plattformtxt);
+        if (showplayer) {
+            if (inroom1) {
+                window.draw(plattformtxt);
+            }
         }
 
         if (showplayer) {
