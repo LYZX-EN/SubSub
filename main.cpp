@@ -107,7 +107,7 @@ int main() {
     waytoroom1f.setTexture(groundtxto);
 
     Dies.setFont(font);
-    Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
+    Dies.setString(std::string("Wasted Lifes : ") + std::to_string(Diescount));
     Dies.setCharacterSize(30);
     Dies.setFillColor(sf::Color::White);
     Dies.setPosition(30, 50);
@@ -152,7 +152,7 @@ int main() {
         if (player1.xplayer > rightsite && inroom1) {
             player1.xplayer -= 100.0f;
             Diescount += 1;
-            Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
+            Dies.setString(std::string("Wasted Lifes : ") + std::to_string(Diescount));
             outofbounce.play();
         }
 
@@ -170,7 +170,7 @@ int main() {
         } else if (player1.xplayer < leftsite && !inroom1) {
             player1.xplayer += 100.0f;
             Diescount += 1;
-            Dies.setString(std::string("Dies : ") + std::to_string(Diescount));
+            Dies.setString(std::string("Wasted Lifes : ") + std::to_string(Diescount));
             outofbounce.play();
         }
 
