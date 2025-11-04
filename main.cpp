@@ -67,7 +67,7 @@ int main() {
     player1.xplayer = ground.xplattform + 410.0f;
     player1.yplayer = ground.yplattform - 75.0f;
     player1.jumpstrengh = 250.0f;
-    player1.playerspeed = 0.05f;
+    player1.playerspeed = 0.07f;
 
     smallenemie.xenemie = ground.xplattform + 1000.0f;
     smallenemie.yenemie = ground.yplattform - 73.0f;
@@ -81,7 +81,7 @@ int main() {
     bool inroom1 = false;
     bool onground;
 
-    int Diescount = 0;
+    int HP = 10;
     int leavecount = 4;
     float rightsite = 925.0f;
     float leftsite = 4.0f;
@@ -107,7 +107,7 @@ int main() {
     waytoroom1f.setTexture(groundtxto);
 
     Dies.setFont(font);
-    Dies.setString(std::string("Wasted Lifes : ") + std::to_string(Diescount));
+    Dies.setString(std::string("HP : ") + std::to_string(HP));
     Dies.setCharacterSize(30);
     Dies.setFillColor(sf::Color::White);
     Dies.setPosition(30, 50);
@@ -137,10 +137,6 @@ int main() {
                 window.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            window.close();
-        }
-
         if (playertxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
             player1.yplayer = waytoroom1.yplattform - 75.0f;
         }
@@ -151,8 +147,8 @@ int main() {
 
         if (player1.xplayer > rightsite && inroom1) {
             player1.xplayer -= 100.0f;
-            Diescount += 1;
-            Dies.setString(std::string("Wasted Lifes : ") + std::to_string(Diescount));
+            HP -= 1;
+            Dies.setString(std::string("HP : ") + std::to_string(HP));
             outofbounce.play();
         }
 
@@ -169,8 +165,8 @@ int main() {
             showenemie = false;
         } else if (player1.xplayer < leftsite && !inroom1) {
             player1.xplayer += 100.0f;
-            Diescount += 1;
-            Dies.setString(std::string("Wasted Lifes : ") + std::to_string(Diescount));
+            HP -= 1;
+            Dies.setString(std::string("HP : ") + std::to_string(HP));
             outofbounce.play();
         }
 
@@ -189,12 +185,12 @@ int main() {
 
             if (playertxt.getGlobalBounds().intersects(smallenemietxt.getGlobalBounds())) {
                 outofbounce.play();
-                Diescount = 10;
+                HP = 0;
             }
 
             if (playertxt.getGlobalBounds().intersects(bigenemietxt.getGlobalBounds())) {
                 outofbounce.play();
-                Diescount = 10;
+                HP = 0;
             }
         }
 
@@ -248,7 +244,7 @@ int main() {
             }
         }
 
-        if (Diescount >= 10) {
+        if (HP <= 0) {
             showplayer = false;
             showenemie = false;
 
