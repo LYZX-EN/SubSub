@@ -47,12 +47,12 @@ int main() {
     sf::Text GameOver;
     sf::Text leavecounter;
 
-    if (!playertxto.loadFromFile("Assets/imgs/player.png")) return -1;
-    if (!groundtxto.loadFromFile("Assets/imgs/grassblock.png")) return -1;
-    if (!outofbounce.openFromFile("Assets/sounds/outofbounce.mp3")) return -1;
-    if (!font.loadFromFile("Assets/fonts/Roboto/font.ttf")) return -1;
-    if (!smallenemietxto.loadFromFile("Assets/imgs/smallenemie.png")) return -1;
-    if (!bigenemietxto.loadFromFile("Assets/imgs/bigenemie.png")) return -1;
+    if (!playertxto.loadFromFile("Assetsx/imgs/player.png")) return -1;
+    if (!groundtxto.loadFromFile("Assetsx/imgs/grassblock.png")) return -1;
+    if (!outofbounce.openFromFile("Assetsx/sounds/outofbounce.mp3")) return -1;
+    if (!font.loadFromFile("Assetsx/fonts/Roboto/font.ttf")) return -1;
+    if (!smallenemietxto.loadFromFile("Assetsx/imgs/smallenemie.png")) return -1;
+    if (!bigenemietxto.loadFromFile("Assetsx/imgs/bigenemie.png")) return -1;
 
     ground.xplattform = -2.0f;
     ground.yplattform = 570.0f;
