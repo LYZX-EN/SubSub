@@ -75,10 +75,11 @@ int main() {
     bigenemie.xenemie = ground.xplattform + 1500.0f;
     bigenemie.yenemie = ground.yplattform - 135.0f;
 
-    bool showenemie = false;
-    bool showplayer = true;
+    bool showenemieR1 = false;
+    bool showplayer1 = true;
     bool isjumping = false;
     bool inroom1 = false;
+    bool inroom2 = false;
     bool onground;
 
     int HP = 10;
@@ -137,6 +138,11 @@ int main() {
                 window.close();
         }
 
+        if (inroom1 == false) {
+            smallenemie.xenemie = ground.xplattform + 1000.0f;
+            bigenemie.xenemie = ground.xplattform + 1500.0f;
+        }
+
         if (playertxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
             player1.yplayer = waytoroom1.yplattform - 75.0f;
         }
@@ -152,17 +158,17 @@ int main() {
             outofbounce.play();
         }
 
-        if (player1.xplayer > rightsite) {
+        if (player1.xplayer > rightsite && !inroom1) {
             player1.xplayer = leftsite;
             inroom1 = true;
             if (clock.getElapsedTime().asSeconds() >= 1.0f) {
-                showenemie = true;
+                showenemieR1 = true;
                 clock.restart();
             }
         } else if (player1.xplayer < leftsite && inroom1) {
             player1.xplayer = rightsite;
             inroom1 = false;
-            showenemie = false;
+            showenemieR1 = false;
         } else if (player1.xplayer < leftsite && !inroom1) {
             player1.xplayer += 100.0f;
             HP -= 1;
@@ -174,9 +180,11 @@ int main() {
             if (player1.jumpstrengh > 150.0f) {
                 player1.jumpstrengh = 150.0f;
             }
+        } else {
+            player1.jumpstrengh = 250.0f;
         }
 
-        if (showenemie) {
+        if (showenemieR1) {
             smallenemie.xenemie -= 0.02f;
             smallenemietxt.setPosition(smallenemie.xenemie, smallenemie.yenemie);
 
@@ -198,7 +206,7 @@ int main() {
             onground = true;
         }
 
-        if (showplayer) {
+        if (showplayer1) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
                 player1.xplayer -= player1.playerspeed;
             }
@@ -245,8 +253,8 @@ int main() {
         }
 
         if (HP <= 0) {
-            showplayer = false;
-            showenemie = false;
+            showplayer1 = false;
+            showenemieR1 = false;
 
             GameOver.setFont(font);
             GameOver.setString("GameOver");
@@ -279,7 +287,7 @@ int main() {
         window.draw(GameOver);
         window.draw(leavecounter);
 
-        if (showplayer) {
+        if (showplayer1) {
             if (!inroom1) {
                 waytoroom1f.setPosition(waytoroom1.xplattform, waytoroom1.yplattform);
                 window.draw(waytoroom1f);
@@ -288,21 +296,21 @@ int main() {
                 window.draw(waytoroom1f);
             }
         }
-        if (showplayer) {
+        if (showplayer1) {
             if (inroom1) {
                 window.draw(plattformtxt);
             }
         }
 
-        if (showplayer) {
+        if (showplayer1) {
             window.draw(playertxt);
         }
 
-        if (showenemie) {
+        if (showenemieR1) {
             window.draw(smallenemietxt);
         }
 
-        if (showenemie) {
+        if (showenemieR1) {
             window.draw(bigenemietxt);
         }
 
