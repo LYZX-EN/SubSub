@@ -23,7 +23,6 @@ public:
     float yplattform;
 };
 
-//YXC
 int main() {
     PLAYER player1;
 
@@ -146,7 +145,7 @@ int main() {
         if (playertxt.getGlobalBounds().intersects(waytoroom1f.getGlobalBounds())) {
             player1.yplayer = waytoroom1.yplattform - 75.0f;
         }
-        
+
         if (playertxt.getGlobalBounds().intersects(plattformtxt.getGlobalBounds()) && inroom1) {
             player1.yplayer = plattform.yplattform - 75.0f;
         }
