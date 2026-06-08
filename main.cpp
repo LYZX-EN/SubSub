@@ -1,5 +1,8 @@
+//#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_audio.h>
+#include <SDL2/SDL_mixer.h>
 #include <iostream>
 
 class PLAYER {
@@ -39,7 +42,9 @@ int main() {
     sf::Texture playertxto;
     sf::Texture groundtxto;
     sf::Texture smallenemietxto;
-    sf::Music outofbounce;
+    //sf::Music outofbounce;
+    SDL_Init(SDL_INIT_AUDIO);
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     sf::Font font;
     sf::Clock clock;
     sf::Text Dies;
@@ -48,7 +53,14 @@ int main() {
 
     if (!playertxto.loadFromFile("Assetsx/imgs/player.png")) return -1;
     if (!groundtxto.loadFromFile("Assetsx/imgs/grassblock.png")) return -1;
-    if (!outofbounce.openFromFile("Assetsx/sounds/outofbounce.mp3")) return -1;
+    //if (!outofbounce.openFromFile("Assetsx/sounds/outofbounce.mp3")) return -1;
+
+    Mix_Music* outofbounce =
+    Mix_LoadMUS("Assetsx/sounds/outofbounce.mp3");
+
+    if (!outofbounce)
+        return -1;
+
     if (!font.loadFromFile("Assetsx/fonts/Roboto/font.ttf")) return -1;
     if (!smallenemietxto.loadFromFile("Assetsx/imgs/smallenemie.png")) return -1;
     if (!bigenemietxto.loadFromFile("Assetsx/imgs/bigenemie.png")) return -1;
@@ -154,7 +166,9 @@ int main() {
             player1.xplayer -= 100.0f;
             HP -= 1;
             Dies.setString(std::string("HP : ") + std::to_string(HP));
-            outofbounce.play();
+            //outofbounce.play();
+            Mix_PlayMusic(outofbounce, 0);
+            //SDL_Delay(1000);
         }
 
         if (player1.xplayer > rightsite && !inroom1) {
@@ -172,7 +186,9 @@ int main() {
             player1.xplayer += 100.0f;
             HP -= 1;
             Dies.setString(std::string("HP : ") + std::to_string(HP));
-            outofbounce.play();
+            //outofbounce.play();
+            Mix_PlayMusic(outofbounce, 0);
+            //SDL_Delay(1000);
         }
 
         if (player1.xplayer > smallenemie.xenemie && player1.xplayer < bigenemie.xenemie) {
@@ -191,12 +207,20 @@ int main() {
             bigenemietxt.setPosition(bigenemie.xenemie, bigenemie.yenemie);
 
             if (playertxt.getGlobalBounds().intersects(smallenemietxt.getGlobalBounds())) {
-                outofbounce.play();
+                //outofbounce.play();
+
+                Mix_PlayMusic(outofbounce, 0);
+                //SDL_Delay(1000);
+
                 HP = 0;
             }
 
             if (playertxt.getGlobalBounds().intersects(bigenemietxt.getGlobalBounds())) {
-                outofbounce.play();
+                //outofbounce.play();
+
+                Mix_PlayMusic(outofbounce, 0);
+                //SDL_Delay(1000);
+
                 HP = 0;
             }
         }
@@ -315,6 +339,11 @@ int main() {
 
         window.display();
     }
+
+
+    Mix_FreeMusic(outofbounce);
+    Mix_CloseAudio();
+    SDL_Quit();
 
     return 0;
 }
