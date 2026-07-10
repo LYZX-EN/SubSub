@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(SubSub)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # SFML
 set(SFML_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/external/SFML-2.6.2/include")
